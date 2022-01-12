@@ -18,14 +18,12 @@ def intro():
         print("\nWordle is a word-based guessing game where you have six tries to guess a randomly generated word. Each letter in your guess provides information about this target word.")
         print("Letters in " + Fore.GREEN + "green " + Fore.RESET + "can be in that exact spot within the target word.")
         print("Letters in " + Fore.YELLOW + "yellow " + Fore.RESET + "can be found somewhere within the target word, but not at the spot where it's located in your guess.\n")
-    def get_len():
-        word_len = input("How long would you like your word to be?\nType 4 or 5.\n")
-        while int(word_len) not in [4, 5]:
-            word_len = input("Please choose a valid option. How long would you like your word to be?\nType 4 or 5.\n")    
-        return get_word(word_len)
-    return get_len()
+    word_len = input("How long would you like your word to be?\nType 4 or 5.\n")
+    while int(word_len) not in [4, 5]:
+        word_len = input("Please choose a valid option. How long would you like your word to be?\nType 4 or 5.\n")    
+    return get_word(word_len)
     
-def set_guess(entry, length): #sets player input to guess NEED WORD VALIDATION
+def set_guess(entry, length):
     while not(type(entry) == str and len(entry) == length):
         entry = input(f"Your guess must be a {length}-letter word.\n")
     if entry not in open(f"{len(entry)}_letters.txt").read():
@@ -49,13 +47,12 @@ def check_guess(guess, word):
             accuracy += (Fore.GREEN + f"{guess[x]}" + Fore.RESET + " ")
     print(accuracy + "\n")
 
-def turn(turns, word): #single turn
+def turn(turns, word): 
     guess = set_guess(input(f"Turns remaining: {turns}\n"), len(word)) #sets 
     check_guess(guess, word)  
 
 def play(turns): 
     word = intro()
-    #print(f"The word is {word}.")
     while turns != 0:
         turn(turns, word)
         turns -= 1
